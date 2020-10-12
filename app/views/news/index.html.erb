@@ -1,0 +1,40 @@
+<%= button_to 'Scrape', scrape_news_path %>
+<p id="notice"><%= notice %></p>
+
+<h1>News</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Url</th>
+      <th>Title</th>
+      <th>Subtitle</th>
+      <th>Publishing date</th>
+      <th>Crawl date</th>
+      <th>News body</th>
+      <th>Tags</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @news.each do |news| %>
+      <tr>
+        <td><%= news.url %></td>
+        <td><%= news.title %></td>
+        <td><%= news.subtitle %></td>
+        <td><%= news.publishing_date %></td>
+        <td><%= news.crawl_date %></td>
+        <td><%= news.news_body %></td>
+        <td><%= news.tags %></td>
+        <td><%= link_to 'Show', news %></td>
+        <td><%= link_to 'Edit', edit_news_path(news) %></td>
+        <td><%= link_to 'Destroy', news, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New News', new_news_path %>
