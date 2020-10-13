@@ -43,7 +43,7 @@ class NewsController < ApplicationController
     websites[:cultura] = 'http://cultura.gov.br/categoria/noticias/'
     websites[:desenvolvimento_social] = 'https://www.gov.br/cidadania/pt-br/noticias-e-conteudos/desenvolvimento-social/noticias-desenvolvimento-social'
 
-    response = NewsCrawler.parse_url(url)
+    response = NewsCrawler.parse_website(websites[:cultura])
 
     flash[:notice] = response
   end

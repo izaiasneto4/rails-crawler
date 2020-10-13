@@ -3,24 +3,24 @@ class NewsCrawler
     unparsed_page = HTTParty.get(url)
     parsed_page = Nokogiri::HTML(unparsed_page)
 
-    posts_container = parsed_page.css('ul#posts-list li')
+    posts_container = parsed_page.css('ul#posts-list li.post')
 
     posts_container.each do |post|
       item = {}
 
-      item[:title] = post.css('.col-9 h2 a').text
-      item[:subtitle] = post.css('.col-9 p').text
-      item[:url] = post.css('.col-9 h2 a').map { |link| link['href'] }[0]
+      item[:title] = post.css('h2 a').text
+      item[:subtitle] = post.css('p').text
+      item[:url] = post.css('h2 a').map { |link| link['href'] }[0]
       item[:publishing_date] = parse_date(post.css('.details').text)
       item[:crawl_date] = Time.now
       item[:news_body] = parse_child_page(item[:url])
 
-      News.where(item).first_or_create
-      return "okay"
+      new_piece = News.where(item).first_or_create
     end
   end
 
   def self.parse_child_page(child_page)
+    puts "parsing: #{child_page}"
     text_body = ""
     unparsed_page = HTTParty.get(child_page)
     parsed_page = Nokogiri::HTML(unparsed_page)
@@ -39,19 +39,12 @@ class NewsCrawler
   end
 
   def self.parse_website(url)
-    continue = true
-    unparsed_website = HTTParty.get(url)
-    parsed_website = Nokogiri::HTML(unparsed_website)
-    last_page = parsed_website.css('.last a.page-link').map { |link| link['href'] }[0].match(/\d/).join.to_i
-    current = 1
-    while continue
+    unparsed_url = HTTParty.get(url)
+    parsed_url = Nokogiri::HTML(unparsed_url)
+    last_page = parsed_url.css('.last a').map { |link| link['href'] }[0].match(/\d+/).to_s.to_i
 
-      
-      if current >= last_page
-        continue = false
-      end
-
-      current += 1
+    for i in 1..last_page
+      parse_url("#{url}/page/#{i}")
     end
   end
 end
