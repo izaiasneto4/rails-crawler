@@ -40,10 +40,13 @@ class NewsCrawler
 
   def self.parse_website(url)
     continue = true
-    last_page 
+    unparsed_website = HTTParty.get(url)
+    parsed_website = Nokogiri::HTML(unparsed_website)
+    last_page = parsed_website.css('.last a.page-link').map { |link| link['href'] }[0].match(/\d/).join.to_i
     current = 1
     while continue
 
+      
       if current >= last_page
         continue = false
       end
