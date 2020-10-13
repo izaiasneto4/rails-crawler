@@ -37,6 +37,14 @@ class NewsController < ApplicationController
     end
   end
 
+  def scrape
+    url = 'http://cultura.gov.br/categoria/noticias/'
+
+    response = NewsCrawler.parse_url(url)
+
+    flash[:notice] = response
+  end
+
   # PATCH/PUT /news/1
   # PATCH/PUT /news/1.json
   def update
