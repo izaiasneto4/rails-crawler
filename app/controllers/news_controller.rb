@@ -41,11 +41,12 @@ class NewsController < ApplicationController
     websites = {}
 
     websites[:cultura] = 'http://cultura.gov.br/categoria/noticias/'
-    websites[:desenvolvimento_social] = 'https://www.gov.br/cidadania/pt-br/noticias-e-conteudos/desenvolvimento-social/noticias-desenvolvimento-social'
+    websites[:desenvolvimento] = 'https://www.gov.br/cidadania/pt-br/noticias-e-conteudos/desenvolvimento-social/noticias-desenvolvimento-social'
 
-    response = NewsCrawler.parse_website(websites[:cultura])
+    NewsCrawler.parse_website(websites[:desenvolvimento])
+    NewsCrawler.parse_website(websites[:cultura])
 
-    flash[:notice] = response
+    flash[:notice] = "Crawling feito com sucesso"
   end
 
   # PATCH/PUT /news/1

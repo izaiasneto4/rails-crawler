@@ -1,6 +1,6 @@
 class NewsCrawler
-  # Secretaria da Cultura 
-  def self.parse_url(url)
+  # Secretaria da Cultura
+  def self.parse_url_cultura(url)
     unparsed_page = HTTParty.get(url)
     parsed_page = Nokogiri::HTML(unparsed_page)
 
@@ -15,13 +15,15 @@ class NewsCrawler
       item[:publishing_date] = parse_date(post.css('.details').text)
       item[:crawl_date] = Time.now
       item[:news_body] = parse_child_page(item[:url])
+      item[:origin] = 'Cultura'
 
       new_piece = News.where(item).first_or_create
+      puts new_piece
     end
   end
 
   # Secretaria do Desenvolvimento Social
-  def self.parse_url_desenvolvimento
+  def self.parse_url_desenvolvimento(url)
     unparsed_page = HTTParty.get(url)
     parsed_page = Nokogiri::HTML(unparsed_page)
 
@@ -30,14 +32,16 @@ class NewsCrawler
     posts_container.each do |post|
       item = {}
 
-      item[:title] = post.css('h2.titleHeadline a').text
+      item[:title] = post.css('h2.tileHeadline a').text
       item[:subtitle] = post.css('p.tileBody .description').text
-      item[:url] = post.css('h2.titleHeadline a').map { |link| link['href'] }[0]
+      item[:url] = post.css('h2.tileHeadline a').map { |link| link['href'] }[0]
       item[:publishing_date] = parse_date(post.css('.documentByLine .summary-view-icon').text)
       item[:crawl_date] = Time.now
       item[:news_body] = parse_child_page(item[:url])
+      item[:origin] = 'Desenvolvimento'
 
       new_piece = News.where(item).first_or_create
+      puts new_piece
     end
   end
 
@@ -47,7 +51,7 @@ class NewsCrawler
     unparsed_page = HTTParty.get(child_page)
     parsed_page = Nokogiri::HTML(unparsed_page)
 
-    paragraphs = parsed_page.css('.entry-content p')
+    paragraphs = parsed_page.css('p')
 
     paragraphs.each do |paragraph|
       text_body += paragraph.text
@@ -63,10 +67,17 @@ class NewsCrawler
   def self.parse_website(url)
     unparsed_url = HTTParty.get(url)
     parsed_url = Nokogiri::HTML(unparsed_url)
-    last_page = parsed_url.css('.last a').map { |link| link['href'] }[0].match(/\d+/).to_s.to_i
 
-    for i in 1..last_page
-      parse_url("#{url}/page/#{i}")
+    if url.match(/cultura/)
+      last_page = parsed_url.css('.last a').map { |link| link['href'] }[0].match(/\d+/).to_s.to_i
+      for i in 1..last_page
+        parse_url("#{url}/page/#{i}")
+      end
+    else
+      last_page = parsed_url.css('a.pagina').text.to_i
+      for i in 0..last_page
+        parse_url_desenvolvimento("#{url}?b_start:int=#{i * 30}")
+      end
     end
   end
 end
