@@ -1,19 +1,16 @@
-<%= button_to 'Scrape', scrape_news_index_path %>
+<div class="text-center">
+<%= button_to 'Scrape new posts', scrape_news_index_path, {class: 'btn btn-primary mb-5 mt-5'} %>
 <p id="notice"><%= notice %></p>
 
-<h1>News</h1>
+<h1 class="title mb-4">Scraped posts</h1>
+</div>
 
-<table>
+<div class="container-fluid">
+<table class="table table-striped">
   <thead>
     <tr>
-      <th>Url</th>
-      <th>Title</th>
-      <th>Subtitle</th>
-      <th>Publishing date</th>
-      <th>Crawl date</th>
-      <th>News body</th>
-      <th>Tags</th>
-      <th>Origin</th>
+      <th scope="col">Title</th>
+      <th scope="col">Subtitle</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -21,22 +18,13 @@
   <tbody>
     <% @news.each do |news| %>
       <tr>
-        <td><%= news.url %></td>
         <td><%= news.title %></td>
         <td><%= news.subtitle %></td>
-        <td><%= news.publishing_date %></td>
-        <td><%= news.crawl_date %></td>
-        <td><%= news.news_body %></td>
-        <td><%= news.tags %></td>
-        <td><%= news.origin %></td>
-        <td><%= link_to 'Show', news %></td>
-        <td><%= link_to 'Edit', edit_news_path(news) %></td>
-        <td><%= link_to 'Destroy', news, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td role="button"><%= link_to 'Show', news, { class: 'btn btn-info '} %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
+<div>
 <br>
-
-<%= link_to 'New News', new_news_path %>
+<%== pagy_bootstrap_nav(@pagy) %>

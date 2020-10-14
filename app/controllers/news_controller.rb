@@ -4,7 +4,7 @@ class NewsController < ApplicationController
   # GET /news
   # GET /news.json
   def index
-    @news = News.all
+    @pagy, @news = pagy(News.all)
   end
 
   # GET /news/1
@@ -43,8 +43,8 @@ class NewsController < ApplicationController
     websites[:cultura] = 'http://cultura.gov.br/categoria/noticias/'
     websites[:desenvolvimento] = 'https://www.gov.br/cidadania/pt-br/noticias-e-conteudos/desenvolvimento-social/noticias-desenvolvimento-social'
 
-    NewsCrawler.parse_website(websites[:desenvolvimento])
     NewsCrawler.parse_website(websites[:cultura])
+    NewsCrawler.parse_website(websites[:desenvolvimento])
 
     flash[:notice] = "Crawling feito com sucesso"
   end
