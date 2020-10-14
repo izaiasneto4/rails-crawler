@@ -1,4 +1,5 @@
 class NewsCrawler
+  # Secretaria da Cultura 
   def self.parse_url(url)
     unparsed_page = HTTParty.get(url)
     parsed_page = Nokogiri::HTML(unparsed_page)
@@ -12,6 +13,27 @@ class NewsCrawler
       item[:subtitle] = post.css('p').text
       item[:url] = post.css('h2 a').map { |link| link['href'] }[0]
       item[:publishing_date] = parse_date(post.css('.details').text)
+      item[:crawl_date] = Time.now
+      item[:news_body] = parse_child_page(item[:url])
+
+      new_piece = News.where(item).first_or_create
+    end
+  end
+
+  # Secretaria do Desenvolvimento Social
+  def self.parse_url_desenvolvimento
+    unparsed_page = HTTParty.get(url)
+    parsed_page = Nokogiri::HTML(unparsed_page)
+
+    posts_container = parsed_page.css('#content-core article')
+
+    posts_container.each do |post|
+      item = {}
+
+      item[:title] = post.css('h2.titleHeadline a').text
+      item[:subtitle] = post.css('p.tileBody .description').text
+      item[:url] = post.css('h2.titleHeadline a').map { |link| link['href'] }[0]
+      item[:publishing_date] = parse_date(post.css('.documentByLine .summary-view-icon').text)
       item[:crawl_date] = Time.now
       item[:news_body] = parse_child_page(item[:url])
 
