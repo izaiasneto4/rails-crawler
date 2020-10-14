@@ -35,5 +35,5 @@
   <%= @news.tags %>
 </p>
 
-<%= link_to 'Edit', edit_news_path(@news) %> |
-<%= link_to 'Back', news_index_path %>
+<%= link_to 'Edit', edit_news_path(@news), {class: 'btn btn-secondary'} %> |
+<%= link_to 'Back', news_index_path, {class: 'btn btn-primary'} %>

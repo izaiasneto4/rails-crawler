@@ -55,6 +55,7 @@ class NewsCrawler
 
     paragraphs.each do |paragraph|
       text_body += paragraph.text
+      text_body += "\n"
     end
 
     text_body
@@ -71,7 +72,7 @@ class NewsCrawler
     if url.match(/cultura/)
       last_page = parsed_url.css('.last a').map { |link| link['href'] }[0].match(/\d+/).to_s.to_i
       for i in 1..last_page
-        parse_url("#{url}/page/#{i}")
+        parse_url_cultura("#{url}/page/#{i}")
       end
     else
       last_page = parsed_url.css('a.pagina').text.to_i

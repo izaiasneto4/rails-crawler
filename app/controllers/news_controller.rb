@@ -7,6 +7,10 @@ class NewsController < ApplicationController
     @pagy, @news = pagy(News.all)
   end
 
+  def search
+    @pagy, @news = pagy(News.where("title LIKE ?", "%" + params[:q] + "%"))
+  end
+
   # GET /news/1
   # GET /news/1.json
   def show
@@ -45,8 +49,7 @@ class NewsController < ApplicationController
 
     NewsCrawler.parse_website(websites[:cultura])
     NewsCrawler.parse_website(websites[:desenvolvimento])
-
-    flash[:notice] = "Crawling feito com sucesso"
+    flash[:notice] = "Successfully crawled websites"
   end
 
   # PATCH/PUT /news/1
