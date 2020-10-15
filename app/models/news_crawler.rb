@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class NewsCrawler
   # Secretaria da Cultura
   def self.parse_url_cultura(url)
@@ -47,7 +49,7 @@ class NewsCrawler
 
   def self.parse_child_page(child_page)
     puts "parsing: #{child_page}"
-    text_body = ""
+    text_body = ''
     unparsed_page = HTTParty.get(child_page)
     parsed_page = Nokogiri::HTML(unparsed_page)
 
@@ -62,7 +64,7 @@ class NewsCrawler
   end
 
   def self.parse_date(str)
-    str.match(/\d{2}\/\d{2}\/\d{4}.\d{2}h\d{2}/).to_s.to_datetime
+    str.match(%r{\d{2}/\d{2}/\d{4}.\d{2}h\d{2}}).to_s.to_datetime
   end
 
   def self.parse_website(url)
@@ -71,12 +73,12 @@ class NewsCrawler
 
     if url.match(/cultura/)
       last_page = parsed_url.css('.last a').map { |link| link['href'] }[0].match(/\d+/).to_s.to_i
-      for i in 1..last_page
+      (1..last_page).each do |i|
         parse_url_cultura("#{url}/page/#{i}")
       end
     else
       last_page = parsed_url.css('a.pagina').text.to_i
-      for i in 0..last_page
+      (0..last_page).each do |i|
         parse_url_desenvolvimento("#{url}?b_start:int=#{i * 30}")
       end
     end

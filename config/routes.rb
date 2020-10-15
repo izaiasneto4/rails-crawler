@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   resources :news do
     match '/scrape', to: 'news#scrape', via: :post, on: :collection

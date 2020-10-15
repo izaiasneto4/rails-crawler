@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class NewsController < ApplicationController
-  before_action :set_news, only: [:show, :edit, :update, :destroy]
+  before_action :set_news, only: %i[show edit update destroy]
 
   # GET /news
   # GET /news.json
@@ -13,8 +15,7 @@ class NewsController < ApplicationController
 
   # GET /news/1
   # GET /news/1.json
-  def show
-  end
+  def show; end
 
   # GET /news/new
   def new
@@ -22,8 +23,7 @@ class NewsController < ApplicationController
   end
 
   # GET /news/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /news
   # POST /news.json
@@ -49,7 +49,7 @@ class NewsController < ApplicationController
 
     NewsCrawler.parse_website(websites[:cultura])
     NewsCrawler.parse_website(websites[:desenvolvimento])
-    flash[:notice] = "Successfully crawled websites"
+    flash[:notice] = 'Successfully crawled websites'
   end
 
   # PATCH/PUT /news/1
@@ -77,13 +77,14 @@ class NewsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_news
-      @news = News.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def news_params
-      params.require(:news).permit(:url, :title, :subtitle, :publishing_date, :crawl_date, :news_body, :tags)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_news
+    @news = News.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def news_params
+    params.require(:news).permit(:url, :title, :subtitle, :publishing_date, :crawl_date, :news_body, :tags)
+  end
 end
