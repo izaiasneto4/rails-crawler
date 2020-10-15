@@ -1,24 +1,19 @@
-# README
+# Data Science Brigade - Test
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Esta aplicação foi feita baseadas nos requisitos solicitados no teste pela Data Science Brigade.
+### Instruções sobre como rodar a aplicação
 
-Things you may want to cover:
+* Instale o rails
 
-* Ruby version
+  [Acesse o link para tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-with-rbenv-on-ubuntu-18-04-pt)
+* Crie o banco de dados e execute as migrations
 
-* System dependencies
+  `rails db:create && rails db:migrate`
+* Instale as gems
 
-* Configuration
+  `bundle install`
+* Rode a aplicação
 
-* Database creation
+  `rails s`
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Feito por [Izaias Neto](https://www.github.com/izaiasneto4)
