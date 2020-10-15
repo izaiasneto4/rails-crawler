@@ -1,0 +1,35 @@
+<div class="text-center">
+<%= button_to 'Scrape new posts', scrape_news_index_path, {class: 'btn btn-primary mb-5 mt-5'} %>
+<p id="notice"><%= notice %></p>
+
+<h1 class="title mb-4">Scraped posts</h1>
+</div>
+
+<%= form_tag(search_news_index_path, method: :get) do %>
+  <input name="q" type="text" placeholder="Search for title, tag or origin of post">
+  <%= submit_tag ("Search") %>
+<% end %>
+
+<div class="container-fluid">
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Subtitle</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @news.each do |news| %>
+      <tr>
+        <td><%= news.title %></td>
+        <td><%= news.subtitle %></td>
+        <td role="button"><%= link_to 'Show', news, { class: 'btn btn-info '} %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div>
+<br>
+<%== pagy_bootstrap_nav(@pagy) %>
