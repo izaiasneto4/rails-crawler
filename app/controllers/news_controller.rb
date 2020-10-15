@@ -8,7 +8,7 @@ class NewsController < ApplicationController
   end
 
   def search
-    @pagy, @news = pagy(News.where("title LIKE ?", "%" + params[:q] + "%"))
+    @pagy, @news = pagy(News.where("concat_ws(' ' , title, origin, tags) LIKE ?", "%#{params[:q]}%"))
   end
 
   # GET /news/1
