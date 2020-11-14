@@ -1,19 +1,22 @@
-# Data Science Brigade - Test
+# Rails Crawler
 
-Esta aplicação foi feita baseadas nos requisitos solicitados no teste pela Data Science Brigade.
-### Instruções sobre como rodar a aplicação
+This is an application that crawls two public sources of news from the Brazilian
+Government, [The Secretary of Culture](http://cultura.gov.br/categoria/noticias/)
+and the [The Secretary of Social Development](https://www.gov.br/cidadania/pt-br/noticias-e-conteudos/desenvolvimento-social/noticias-desenvolvimento-social)
 
-* Instale o rails
+### How to run the app
 
-  [Acesse o link para tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-with-rbenv-on-ubuntu-18-04-pt)
-* Crie o banco de dados e execute as migrations
+* Install Rails on your machine
+
+  [Tutorial link](https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-with-rbenv-on-ubuntu-18-04-pt)
+* Create a database and run the migrations
 
   `rails db:create && rails db:migrate`
-* Instale as gems
+* Install the gems
 
   `bundle install`
-* Rode a aplicação
+* Run the application
 
   `rails s`
 
-Feito por [Izaias Neto](https://www.github.com/izaiasneto4)
+Made by [Izaias Neto](https://www.github.com/izaiasneto4)
