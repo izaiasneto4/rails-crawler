@@ -16,10 +16,8 @@
     // Sucess message when the scraper finishes
     const scrapeButton = document.querySelector('.scrape-button');
     scrapeButton.addEventListener('click', function(e) {
-      e.preventDefault();
       this.setAttribute('value', '');
       this.className = "spinner-border text-primary mb-5 mt-5";
-      e.submit();
     });
   </script>
 </html>
