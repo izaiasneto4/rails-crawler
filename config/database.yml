@@ -81,6 +81,6 @@ test:
 #
 production:
   <<: *default
-  database: rails-crawler_production
-  username: rails-crawler
-  password: <%= ENV['rails-crawler_DATABASE_PASSWORD'] %>
+  database: <%= ENV[DATABASE_URL] %>
+  # username: rails-crawler
+  # password: <%= ENV['rails-crawler_DATABASE_PASSWORD'] %>
