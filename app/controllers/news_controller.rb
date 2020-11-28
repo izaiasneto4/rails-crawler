@@ -42,14 +42,20 @@ class NewsController < ApplicationController
   end
 
   def scrape
-    websites = {}
+    # websites = {}
 
-    websites[:cultura] = 'http://cultura.gov.br/categoria/noticias/'
-    websites[:desenvolvimento] = 'https://www.gov.br/cidadania/pt-br/noticias-e-conteudos/desenvolvimento-social/noticias-desenvolvimento-social'
+    # websites[:cultura] = 'http://cultura.gov.br/categoria/noticias/'
+    # websites[:desenvolvimento] = 'https://www.gov.br/cidadania/pt-br/noticias-e-conteudos/desenvolvimento-social/noticias-desenvolvimento-social'
 
-    NewsCrawler.parse_website(websites[:cultura])
-    NewsCrawler.parse_website(websites[:desenvolvimento])
-    flash[:notice] = 'Successfully crawled websites'
+    t1 = Thread.new {
+      NewsCrawler.parse_website('http://cultura.gov.br/categoria/noticias/')
+    }
+
+    t2 = Thread.new {
+      NewsCrawler.parse_website('https://www.gov.br/cidadania/pt-br/noticias-e-conteudos/desenvolvimento-social/noticias-desenvolvimento-social')
+    }
+
+    flash[:notice] = "The crawler is being executed. Please go back to see the crawled data."
   end
 
   # PATCH/PUT /news/1

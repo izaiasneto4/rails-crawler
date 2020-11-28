@@ -73,12 +73,12 @@ class NewsCrawler
 
     if url.match(/cultura/)
       last_page = parsed_url.css('.last a').map { |link| link['href'] }[0].match(/\d+/).to_s.to_i
-      (1..last_page).each do |i|
+      (1..1).each do |i|
         parse_url_cultura("#{url}/page/#{i}")
       end
     else
       last_page = parsed_url.css('a.pagina').text.to_i
-      (0..last_page).each do |i|
+      (0..1).each do |i|
         parse_url_desenvolvimento("#{url}?b_start:int=#{i * 30}")
       end
     end
