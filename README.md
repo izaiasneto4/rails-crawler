@@ -2,7 +2,10 @@
 
 This is an application that crawls two public sources of news from the Brazilian
 Government, [The Secretary of Culture](http://cultura.gov.br/categoria/noticias/)
-and the [The Secretary of Social Development](https://www.gov.br/cidadania/pt-br/noticias-e-conteudos/desenvolvimento-social/noticias-desenvolvimento-social)
+and the [The Secretary of Social Development](https://www.gov.br/cidadania/pt-br/noticias-e-conteudos/desenvolvimento-social/noticias-desenvolvimento-social) using
+Ruby on Rails.
+
+### Live Demo
 
 ### How to run the app
 
