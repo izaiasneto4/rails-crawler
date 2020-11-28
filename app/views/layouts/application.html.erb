@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>DsbTest</title>
+    <title>Rails Crawler</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -12,4 +12,14 @@
   <body>
     <%= yield %>
   </body>
+  <script>
+    // Sucess message when the scraper finishes
+    const scrapeButton = document.querySelector('.scrape-button');
+    scrapeButton.addEventListener('click', function(e) {
+      e.preventDefault();
+      this.setAttribute('value', '');
+      this.className = "spinner-border text-primary mb-5 mt-5";
+      e.submit();
+    });
+  </script>
 </html>
